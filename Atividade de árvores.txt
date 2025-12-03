@@ -1,0 +1,348 @@
+1 - Defina o que é raiz, nó interno e folha em uma árvore binária.
+	
+- Raiz é o primeiro nó da árvore e não possui pai;
+- Nós são unidades de dados que podem possuir referências para seus filhos;
+- Folhas são nós que não possuem filhos.
+
+2 - Desenhe uma árvore binária para o vetor [10, 5, 15, 2, 7].
+
+	7
+       / \
+      5   10
+     /     \
+    2       15
+        
+3 - Calcule a altura de uma árvore manualmente a partir de um desenho.
+
+	8
+      /   \
+     3     10
+    / \      \
+   1   6      14
+      / \    /
+     4   7  13
+
+Altura 4.
+  
+4 - Identifique se uma árvore dada (desenho ou código) é uma árvore de busca binária (BST).
+
+        8
+      /   \
+     3     10
+    / \      \
+   1   6      14
+      / \    /
+     4   7  13
+
+Essa árvore é BST pois todos os valores a esquerda dos nós são menores que os valores desses nós e todos os valores a direita são maiores que os valores desses nós.
+
+5 - Implemente uma classe No com campos valor, esquerda e direita.
+
+private static Node {
+
+	int value;
+	Node left;
+	Node right;
+
+	public Node(int value) {
+		this.value = value;
+	}
+}
+
+6 - Implemente uma classe ArvoreBinaria com o método inserir(int valor).
+
+public class ArvoreBinaria {
+
+	private Node root;
+
+	public void add(int value) {
+		root = addRecursive(this.root, value);
+	}
+
+	private Node addRecursive(Node root, int value) {
+		if (root == null) {
+			return new Node(value);
+		} else if (value < root.value) {
+			root.left = addRecursive(root.left, value);
+		} else {
+			root.right = addRecursive(root.right, value);
+		}
+		return root;
+	}
+}
+
+7 - Crie um método que verifique se a árvore está vazia.
+
+	public void isEmpty() {
+		if (this.root == null) {
+			System.out.println("Está vazia!");
+		} else {
+			System.out.println("Não está vazia!");
+		}
+	}
+
+8 - Crie um método que retorne a quantidade de nós da árvore.
+
+
+	public int countNode() {
+		return countNodesRecursive(this.root) {
+	}
+
+	private int countNodesRecursive(Node root) {
+		if (root == null) return 0;
+
+		return 1 + countNodesRecursive(root.left) + countNodesRecursive(root.right);
+	}
+
+
+9 - Crie um método que retorne a altura da árvore.
+
+	public int height() {
+		return heightRecursive(this.root);
+	}
+
+	private int heightRecursive(Node root) {
+		if (root == null) return -1;
+
+		return 1 + Math.max(heightRecursive(root.left), heightRecursive(root.right));
+	}
+
+10 - Implemente o percurso pré-ordem (raiz → esquerda → direita).
+
+	public void printPreOrder() {
+        	System.out.println("Pre-order:");
+        	printPreOrderRecursive(this.root);
+        	System.out.println();
+    	}
+
+    	private void printPreOrderRecursive(Node root) {
+        	if (root == null) {
+        		return;
+        	}
+
+        	System.out.print(root.value + " ");
+        	printInOrderRecursive(root.left);
+        	printInOrderRecursive(root.right);
+    	}
+
+11 - Implemente o percurso em ordem (esquerda → raiz → direita).
+
+	public void printInOrder() {
+        	System.out.println("In-order:");
+        	printInOrderRecursive(this.root);
+        	System.out.println();
+    	}
+
+    	private void printInOrderRecursive(Node root) {
+        	if (root == null) {
+            		return;
+        	}
+
+        	printInOrderRecursive(root.left);
+        	System.out.print(root.value + " ");
+        	printInOrderRecursive(root.right);
+    	}
+
+12 - Implemente o percurso pós-ordem (esquerda → direita → raiz).
+
+	public void printPosOrder() {
+        	System.out.println("In-order:");
+        	printInOrderRecursive(this.root);
+        	System.out.println();
+    	}
+
+    	private void printPosOrderRecursive(Node root) {
+        	if (root == null) {
+            		return;
+        	}
+
+        	printInOrderRecursive(root.left);
+        	System.out.print(root.value + " ");
+        	printInOrderRecursive(root.right);
+    	}
+
+13 - Implemente o percurso em largura (nível por nível).
+
+	public void printLevelOrder() {
+        System.out.println("Nível por nível:");
+        if (root == null) {
+            return;
+        }
+
+        Queue<Node> queue = new LinkedList<>();
+        queue.add(root);
+
+        while (!queue.isEmpty()) {
+            Node current = queue.poll();
+            System.out.print(current.value + " ");
+
+            if (current.left != null) {
+                queue.add(current.left);
+            }
+            if (current.right != null) {
+                queue.add(current.right);
+            }
+        }
+        System.out.println();
+    }
+
+14 - Dada uma árvore, liste apenas os nós folhas.
+
+        8
+      /   \
+     3     10
+    / \      \
+   1   6      14
+      / \    /
+     4   7  13	
+
+1, 4, 7, 13.
+
+15 - Implemente a busca de um elemento em uma BST.
+
+	public boolean contains(int value) {
+		return containsRecursive(this.root, value);
+	}
+
+	private boolean containsRecursive(Node root, int value) {
+		if (root == null) return false;
+
+		if (root.value == value) {
+			return true;
+		} else if (value < root.value) {
+			return containsRecursive(root.left, value);
+		} else {
+			return containsRecursive(root.right, value);
+		}
+	}
+	
+16, 17 - Implemente a remoção de um nó com um (filho em uma BST/ dois filhos em uma BST).
+
+	public void remove(int value) {
+		this.root = removeRecursive(this.root, value);
+	}
+	
+	public Node removeRecursive(Node root, int value) {
+		if (root == null) {
+			return null;
+		}
+
+		if (value < root.value) {
+			return removeRecursive(root.left, value);
+		} else if {
+			return removeRecursive(root.right, value);
+		} else {
+			if (root.left == null && root.right == null) {
+				reuturn null;
+			}
+
+			if (root.left == null) {
+				return root.left
+			}
+			if (root.right == null) {
+				return root.right
+			}
+
+			int minRightValue = minValueRecursive(root.right);
+			root.value = minRightValue;
+			root.right = removeRecursive(root.right, value);
+		}
+		return root;
+	}
+
+	
+	private int minValueRecursive(Node root) {
+		if (root == null) return -1;
+		
+		if (root.left != null) {
+            		return minValueRecursive(root.left);
+        	}
+        	return root.value;
+	}
+
+18 - 
+
+	Somente utilizar o método de busca implementado na questão 15.
+
+19 - Conte quantos nós possuem apenas um filho.
+
+	public int nodeOneChildren() {
+        	return nodeOneChildrenRecursive(this.root);
+    	}
+
+    	private int nodeOneChildrenRecursive(Node root) {
+        	if (root == null) {
+            		return 0;
+        	}
+
+        	if (root.left != null && root.right != null) {
+            		return 0 + nodeOneChildrenRecursive(root.left) + nodeOneChildrenRecursive(root.right);
+        	} else if (root.left != null) {
+	        	return 1 + nodeOneChildrenRecursive(root.left);
+        	} else if (root.right != null) {
+            		return 1 + nodeOneChildrenRecursive(root.right);
+        	} else {
+	        	return 0;
+	        }
+	}
+
+20 - Conte quantos nós possuem exatamente dois filhos.
+
+	public int hasTwoSons() {
+		return hasTwoSonsRecursive(this.root);
+	}
+	
+	public int hasTwoSonsRecursive(Node root) {
+		if (root == null) return 0;
+
+		if (root.left != null && root.right != null) {
+			return 1 + hasTwoSonsRecursive(root.left) + hasTwoSonsRecursive(root.right);
+		} else if (root.left != null) {
+			return 0 + hasTwoSonsRecursive(root.left);
+		} else if (root.right != null){
+			return 0 + hasTwoSonsRecursive(root.right);
+		} else {
+			return 0;
+		}
+	}
+
+21 - Construa uma árvore a partir de um vetor de inteiros.
+
+	int[] treeValues = {5, 2, 3, 7, 8};
+
+        for (int value : treeValues) {
+        	tree.add(value);
+        }
+
+22 - Gere um vetor com os elementos da árvore em ordem.
+
+	public List<Integer> toInOrderList() {
+		List<Integer> result = new ArrayList<>();
+        	toInOrderListRecursive(this.root, result);
+        	return result;
+	}
+
+	private void toInOrderListRecursive(Node root, List<Integer> list) {
+		if (root == null) return;
+
+		toInOrderListRecursive(root.left, list);
+		list.add(root.value);
+		toInOrderListRecursive(root.right, list);
+	}
+
+23 - Conte quantos valores da árvore são pares.
+
+
+	public int evenValues() {
+		return eveValuesRecursive(this.root);
+	}
+
+	private int evenValuesRecursive(Node root);
+		if (root == null) return 0;
+
+		if (root.value % 2 == 0) {
+			return 1 + evenValuesRecursive(root.left) + evenValuesRecursive(root.right);
+		} else {
+			return 0 + evenValuesRecursive(root.left) + evenValuesRecursive(root.right);
+		}
+	}
